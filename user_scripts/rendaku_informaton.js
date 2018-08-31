@@ -55,7 +55,7 @@ $(function() {
         $.jStorage.listenKeyChange('l/currentLesson', function(key) {
             var section = '<h2>Rendaku Information</h2><p>Your notes</p>'
             if (section) {
-                $('div#supplement-voc-meaning').append(section.prepend('<br />'));
+                $('div#supplement-voc-reading-exp').after(section);
             }
         });
     }
