@@ -51,7 +51,7 @@ $(function() {
         });
 
         $('div#all-info').on('click', function() {
-            var word = $.jStorage.get(key).voc;
+            var word = $.jStorage.get('currentItem').voc;
             var section = get_rendaku_section(word);
             if (section && current_word != word) {
                 $('section#note-reading').before(section);
