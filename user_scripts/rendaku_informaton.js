@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.1
+// @version     0.1001
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
