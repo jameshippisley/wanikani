@@ -48,15 +48,15 @@ $(function() {
                 $('div#item-info').prepend(section.append('<br />'));
             }
         });
-    }
+    } */
 
     // Process the lesson page.
     else if (url.indexOf('lesson/session') != -1) {
         $.jStorage.listenKeyChange('l/currentLesson', function(key) {
-            var section = GetPartOfSpeechData($.jStorage.get(key).voc, DATA);
+            var section = '<h2>Rendaku Information</h2><p>Your notes</p>'
             if (section) {
                 $('div#supplement-voc-meaning').append(section.prepend('<br />'));
             }
         });
-    } */
+    }
 });
