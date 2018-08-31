@@ -20,7 +20,7 @@ $(function() {
     'use strict';
 
     function get_rendaku_section(word) {
-        return `<h2>Rendaku Information</h2><p>Your notes for ${word}</p>`;
+        return `<div><h2>Rendaku Information</h2><p>Your notes for ${word}</p></div>`;
     }
 
     // Switch based on the content of the URL.
@@ -62,11 +62,17 @@ $(function() {
 
     // Process the lesson page.
     else if (url.indexOf('lesson/session') != -1) {
+        var current_lesson_word = '';
         $.jStorage.listenKeyChange('l/currentLesson', function(key) {
             var word = $.jStorage.get(key).voc;
             var section = get_rendaku_section(word);
-            if (section) {
+            console.log(`word = ${word} current_lesson_word = ${current_lesson_word}`)
+            if (section && current_lesson_word != word) {
+                if (current_lesson_word != '') {
+                    $('div#supplement-voc-reading-exp').next().remove();
+                }
                 $('div#supplement-voc-reading-exp').after(section);
+                current_lesson_word = word
             }
         });
     }
