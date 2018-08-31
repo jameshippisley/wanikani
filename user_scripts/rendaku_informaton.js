@@ -10,8 +10,8 @@
 // @match      *://www.wanikani.com/review/session*
 // @match      *://www.wanikani.com/lesson/session*
 //
-// @updateURL   https://github.com/jameshippisley/wanikani/raw/master/user_scripts/rendaku_information.js
-// @downloadURL https://https://github.com/jameshippisley/wanikani/raw/master/user_scripts/rendaku_information.js
+// @updateURL   https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_informaton.js
+// @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_informaton.js
 //
 // @run-at      document-end
 // ==/UserScript==
