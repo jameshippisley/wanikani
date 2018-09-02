@@ -76,7 +76,5 @@ function WK_Rendaku()
 // #############################################################################
 var wk_rendaku = new WK_Rendaku();
 
-bad syntax!!!
-
 wk_rendaku.init();
 wk_rendaku.run();
