@@ -6,7 +6,7 @@ function WK_Rendaku()
     this.currentSubject = null;
 
     this.settings = {
-        "debug": false
+        "debug": true
     };
 
 }
