@@ -1,3 +1,4 @@
+/*
 // #############################################################################
 function WK_Rendaku()
 {
@@ -78,3 +79,4 @@ var wk_rendaku = new WK_Rendaku();
 
 wk_rendaku.init();
 wk_rendaku.run();
+*/
