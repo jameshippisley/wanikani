@@ -29,9 +29,8 @@ function WK_Rendaku()
     this.currentSubject = null;
 
     this.settings = {
-        "debug": true
+        "debug": false
     };
-
 }
 
 
@@ -46,7 +45,7 @@ function WK_Rendaku()
 
         const subject = this.wki.getSubject();
 
-        this.log(`Injecting phonetic section (callback works).`);
+        this.log(`Injecting rendaku section (callback works).`);
 
         if (!this.wki.checkSubject(subject, [`voc`]))
             return;
@@ -54,8 +53,6 @@ function WK_Rendaku()
         this.currentSubject = subject;
         this.log(`Working with the following input:`, subject);
         // #####################################################################
-
-        this.log('Vocab', subject.voc)
 
         // #####################################################################
         switch(curPage)
