@@ -14,7 +14,7 @@
 // @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.js
 //
 // @require     https://raw.githubusercontent.com/mwil/wanikani-userscripts/3c6ea0466951a1e58b75b2cb7a945ed7716082f7/utility/wk_interaction.js
-// @require   L https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information_data.json
+// @require     https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information_data.json
 //
 // @run-at      document-end
 //
