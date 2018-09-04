@@ -10,8 +10,8 @@
 // @match      *://www.wanikani.com/review/session*
 // @match      *://www.wanikani.com/lesson/session*
 //
-// @updateURL   https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.js
-// @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.js
+// @updateURL   https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
+// @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 //
 // @require     https://raw.githubusercontent.com/mwil/wanikani-userscripts/3c6ea0466951a1e58b75b2cb7a945ed7716082f7/utility/wk_interaction.js
 // @require     https://raw.githubusercontent.com/jameshippisley/wanikani/bde48e18fb6af5c236a7c2fb12357f33c48a2403/user_scripts/rendaku_information_data.json
