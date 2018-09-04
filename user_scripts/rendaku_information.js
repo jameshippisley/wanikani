@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.1004
+// @version     0.1005
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
@@ -23,7 +23,7 @@
 // ==/UserScript==
 
 // The code below to insert custom lessons sections into the WaniKani pages is completely copied from (and calls)
-// https://github.com/mwil/wanikani-userscripts/tree/master/wanikani-phonetic-compounds/...
+// https://raw.githubusercontent.com/jameshippisley/wanikani/2e6f9c55e3aec83b79db6b51990e23e315608a6b/user_scripts/rendaku_information_data.json
 // Massive thanks to mwil for showing me how to make use of this code.
 
 // #############################################################################
