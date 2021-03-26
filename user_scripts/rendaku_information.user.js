@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.2002
+// @version     0.2003
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
@@ -14,7 +14,7 @@
 // @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 //
 // @require     https://raw.githubusercontent.com/mwil/wanikani-userscripts/3c6ea0466951a1e58b75b2cb7a945ed7716082f7/utility/wk_interaction.js
-// @require     https://raw.githubusercontent.com/jameshippisley/wanikani/253d3e9b63b9c1ce9a56377707827a98170c316d/user_scripts/rendaku_information_data.json
+// @require     https://raw.githubusercontent.com/jameshippisley/wanikani/global-variable-fix/user_scripts/rendaku_information_data.json
 //
 // @run-at      document-end
 //
@@ -101,7 +101,7 @@ function WK_Rendaku()
                          .addClass(`${GM_info.script.namespace} col1`);
 
         var word = this.currentSubject.voc
-        var info = DATA[word]
+        var info = WK_RENDAKU_INFO_DATA[word]
         if (info) {
             $section.append(`<div><h2>Rendaku Information</h2><p>${info}</p></div>`);
             this.log(`Created the Rendaku section, appending to the page!`);
