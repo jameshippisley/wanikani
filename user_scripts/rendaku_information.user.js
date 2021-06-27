@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.2004
+// @version     0.2005
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
@@ -98,7 +98,7 @@ function WK_Rendaku()
         const $section = $(`<section></section>`)
                          .attr(`id`, `rendaku_section`)
                          .attr(`style`, style)
-                         .addClass(`${GM_info.script.namespace} col1`);
+                         .addClass(`${GM_info.script.namespace}`);
 
         var word = this.currentSubject.voc
         var info = WK_RENDAKU_INFO_DATA[word]
