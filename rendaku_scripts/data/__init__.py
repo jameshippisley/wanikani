@@ -1,0 +1,1 @@
+from data.reader import get_all_vocab

@@ -1,0 +1,6 @@
+# WaniKani - Kanji
+# Generated on August 25, 2018 13:54 PM UTC
+# WaniKani to Anki Exporter (http://wanikanitoanki.com)
+#key;type;character;meaning;image;onyomi;kunyomi;important_reading;kana;level
+k_人;kanji;人;person;;にん, じん;ひと, と;onyomi;;1
+k_達;kanji;達;attain, plural;;たつ;たち;onyomi;;18

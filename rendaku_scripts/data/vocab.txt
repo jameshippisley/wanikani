@@ -1,0 +1,6 @@
+# Generated on September 05, 2018 12:22 PM UTC
+# WaniKani - Vocabulary
+# WaniKani to Anki Exporter (http://wanikanitoanki.com)
+#key;type;character;meaning;image;onyomi;kunyomi;important_reading;kana;level
+v_人々;vocabulary;人々;people, everybody;;;;;ひとびと;2
+v_人達;vocabulary;人達;people;;;;;ひとたち;20
