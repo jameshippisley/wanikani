@@ -13,7 +13,7 @@
 // @updateURL   https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 // @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 //
-// @require     https://raw.githubusercontent.com/mwil/wanikani-userscripts/dcb8b40135dd68fdde8764be4e50ace03ad80506/utility/wk_interaction.js
+// @require     https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=958983
 // @require     https://raw.githubusercontent.com/jameshippisley/wanikani/51ec0bb201f179ac632dc9c0f4aa64b778428f39/user_scripts/rendaku_information_data.json
 //
 // @run-at      document-end
@@ -22,17 +22,13 @@
 //
 // ==/UserScript==
 
-// The code below to insert custom lessons sections into the WaniKani pages is completely copied from (and calls)
+// The code below to insert custom lessons sections into the WaniKani pages is partially copied from
 // https://github.com/mwil/wanikani-userscripts/tree/master/wanikani-phonetic-compounds
 // Massive thanks to mwil for showing me how to make use of this code.
 
 // #############################################################################
 function WK_Rendaku()
 {
-    this.wki = new WKInteraction(GM_info.script.namespace);
-
-    this.currentSubject = null;
-
     this.settings = {
         "debug": false
     };
@@ -42,75 +38,21 @@ function WK_Rendaku()
 (function() {
     'use strict';
 
-   // #########################################################################
-    WK_Rendaku.prototype.injectRendakuSection = function(event, curPage)
+    WK_Rendaku.prototype.createRendakuSection = function(word)
     {
-        // #####################################################################
-        $(`#rendaku_section`).remove();
+        let p = null;
 
-        const subject = this.wki.getSubject();
-
-        this.log(`Injecting rendaku section (callback works).`);
-
-        if (!this.wki.checkSubject(subject, [`voc`]))
-            return;
-
-        this.currentSubject = subject;
-        this.log(`Working with the following input:`, subject);
-        // #####################################################################
-
-        // #####################################################################
-        switch(curPage)
-        {
-            case this.wki.PageEnum.vocabulary:
-                $(`section#note-reading`)
-                    .before(this.createRendakuSection());
-                break;
-            case this.wki.PageEnum.reviews:
-            case this.wki.PageEnum.lessons_reviews:
-                if ($(`section#item-info-reading-mnemonic`).length)
-                {
-                    $(`section#item-info-reading-mnemonic`)
-                        .after(this.createRendakuSection());
-
-                    if ($(`section#item-info-reading-mnemonic`).is(`:hidden`))
-                        $(`#rendaku_section`).hide();
-                }
-                else
-                    $(`section#note-reading`)
-                        .before(this.createRendakuSection());
-
-                break;
-            case this.wki.PageEnum.lessons:
-                $(`div#supplement-voc-reading-exp`)
-                    .after(this.createRendakuSection(`margin-top: 1.5em;`));
-                break;
-            default:
-                GM_log(`Unknown page type ${curPage}, cannot inject info!`);
-                return;
-        }
-        // #####################################################################
-
-    }
-
-    WK_Rendaku.prototype.createRendakuSection = function(style)
-    {
-        const $section = $(`<section></section>`)
-                         .attr(`id`, `rendaku_section`)
-                         .attr(`style`, style)
-                         .addClass(`${GM_info.script.namespace}`);
-
-        var word = this.currentSubject.voc
         var info = WK_RENDAKU_INFO_DATA[word]
         if (info) {
-            $section.append(`<div><h2>Rendaku Information</h2><p>${info}</p></div>`);
+            p = document.createElement(`p`);
+            p.innerHTML = info;
             this.log(`Created the Rendaku section, appending to the page!`);
         }
         else {
             this.log(`no info for ${word}`)
         }
 
-        return $section;
+        return p;
     };
 
     // #########################################################################
@@ -123,25 +65,13 @@ function WK_Rendaku()
             } :
             function() {};
 
-        this.wki.init();
-
         this.log(`The script element is:`, GM_info);
 
         // #####################################################################
-        // Main hook, WK Interaction will kick off this script once the page
-        // is ready and we can access the subject of the page.
-        $(document).on(`${GM_info.script.namespace}_wk_subject_ready`,
-                       this.injectRendakuSection.bind(this));
+        // Main hook, WK Item Info Injector will kick off this script once the
+        // page is ready and we can access the subject of the page.
+        wkItemInfo.forType(`vocabulary`).under(`reading`).appendSubsection(`Rendaku Information`, o => this.createRendakuSection(o.characters));
         // #####################################################################
-    };
-    // #########################################################################
-
-    // Just do it!
-    // #########################################################################
-    WK_Rendaku.prototype.run = function()
-    {
-        // Start page detection (and its callbacks once ready)
-        this.wki.startInteraction.call(this.wki);
     };
     // #########################################################################
 }
@@ -154,4 +84,3 @@ function WK_Rendaku()
 var wk_rendaku = new WK_Rendaku();
 
 wk_rendaku.init();
-wk_rendaku.run();
