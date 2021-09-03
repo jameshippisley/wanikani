@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.2007
+// @version     0.2008
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
@@ -18,54 +18,73 @@
 //
 // @run-at      document-end
 //
-// @grant       GM_log
+// @grant       none
 //
 // ==/UserScript==
-
-// The code below to insert custom lessons sections into the WaniKani pages is partially copied from
-// https://github.com/mwil/wanikani-userscripts/tree/master/wanikani-phonetic-compounds
-// Massive thanks to mwil for showing me how to make use of this code.
 
 // #############################################################################
 function WK_Rendaku()
 {
     this.settings = {
-        "debug": false
+        hideTrivial: false
     };
+    this.currentlyLoadingSettings = false; // if wkof is available and currently loading the settings, this will be a Promise resolving after the settings are loaded
 }
 
 
 (function() {
     'use strict';
 
+    /* global WK_RENDAKU_INFO_DATA, wkof, wkItemInfo */
+
     WK_Rendaku.prototype.createRendakuSection = function(word)
     {
-        let p = null;
+        let info = WK_RENDAKU_INFO_DATA[word];
+        if (!info) return null;
 
-        var info = WK_RENDAKU_INFO_DATA[word]
-        if (info) {
-            p = document.createElement(`p`);
+        let trivial = info.includes(`no possible rendaku`);
+        let waitForSettings = trivial && this.currentlyLoadingSettings;
+
+        let paragraphConstructor = () => {
+            if (trivial && this.settings.hideTrivial) return null;
+            let p = document.createElement(`p`);
             p.innerHTML = info;
-            this.log(`Created the Rendaku section, appending to the page!`);
-        }
-        else {
-            this.log(`no info for ${word}`)
-        }
+            return p;
+        };
 
-        return p;
+        if (waitForSettings) {
+            return this.currentlyLoadingSettings.then(paragraphConstructor);
+        } else {
+            return paragraphConstructor();
+        }
     };
+
+    WK_Rendaku.prototype.setupMenu = function()
+    {
+        wkof.Menu.insert_script_link({name: `rendaku_information`, submenu: `Settings`, title: `Rendaku Information`, on_click: this.openSettings.bind(this)});
+        return wkof.Settings.load(`rendaku_information`, this.settings).then(() => Object.assign(this.settings, wkof.settings.rendaku_information));
+    }
+
+    WK_Rendaku.prototype.openSettings = function()
+    {
+        let dialog = new wkof.Settings({
+            script_id: `rendaku_information`,
+            title: `Rendaku Information Settings`,
+            on_save: () => Object.assign(this.settings, wkof.settings.rendaku_information),
+            content: {
+                hideTrivial: {type: `checkbox`, label: `Hide trivial info`, hover_tip: `If the rendaku information is trivial, don't show the section at all.`}
+            }
+        });
+        dialog.open();
+    }
 
     // #########################################################################
     WK_Rendaku.prototype.init = function()
     {
-
-        this.log = this.settings.debug ?
-            function(msg, ...args) {
-                GM_log(`${GM_info.script.namespace}:`, msg, ...args);
-            } :
-            function() {};
-
-        this.log(`The script element is:`, GM_info);
+        if (typeof wkof === `object`) {
+            wkof.include(`Menu,Settings`);
+            this.currentlyLoadingSettings = wkof.ready(`Menu,Settings`).then(this.setupMenu.bind(this)).then(() => { this.currentlyLoadingSettings = false; });
+        }
 
         // #####################################################################
         // Main hook, WK Item Info Injector will kick off this script once the
