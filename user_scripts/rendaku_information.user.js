@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.2009
+// @version     0.2010
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
@@ -13,7 +13,7 @@
 // @updateURL   https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 // @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 //
-// @require     https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=969075
+// @require     https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=972944
 // @require     https://raw.githubusercontent.com/jameshippisley/wanikani/51ec0bb201f179ac632dc9c0f4aa64b778428f39/user_scripts/rendaku_information_data.json
 //
 // @run-at      document-end
@@ -29,6 +29,7 @@ function WK_Rendaku()
         hideTrivial: false
     };
     this.currentlyLoadingSettings = false; // if wkof is available and currently loading the settings, this will be a Promise resolving after the settings are loaded
+    this.itemInfoHandle = null;
 }
 
 
@@ -70,12 +71,18 @@ function WK_Rendaku()
         let dialog = new wkof.Settings({
             script_id: `rendaku_information`,
             title: `Rendaku Information Settings`,
-            on_save: () => Object.assign(this.settings, wkof.settings.rendaku_information),
+            on_save: this.saveSettings.bind(this),
             content: {
                 hideTrivial: {type: `checkbox`, label: `Hide trivial info`, hover_tip: `If the rendaku information is trivial, don't show the section at all.`}
             }
         });
         dialog.open();
+    }
+
+    WK_Rendaku.prototype.saveSettings = function()
+    {
+        Object.assign(this.settings, wkof.settings.rendaku_information);
+        this.itemInfoHandle.renew();
     }
 
     // #########################################################################
@@ -89,7 +96,7 @@ function WK_Rendaku()
         // #####################################################################
         // Main hook, WK Item Info Injector will kick off this script once the
         // page is ready and we can access the subject of the page.
-        wkItemInfo.forType(`vocabulary`).under(`reading`).appendSubsection(`Rendaku Information`, o => this.createRendakuSection(o.characters));
+        this.itemInfoHandle = wkItemInfo.forType(`vocabulary`).under(`reading`).appendSubsection(`Rendaku Information`, o => this.createRendakuSection(o.characters));
         // #####################################################################
     };
     // #########################################################################
