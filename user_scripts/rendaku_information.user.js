@@ -44,7 +44,7 @@ function WK_Rendaku()
         if (!info) return null;
 
         let trivial = info.includes(`no possible rendaku`);
-        const unexceptional = info.includes(`none of the exceptional circumstances`);
+        const unexceptional = !info.includes(`unexpectedly`) && info.includes(`none of the exceptional circumstances`);
         let waitForSettings = trivial && unexceptional && this.currentlyLoadingSettings;
 
         let paragraphConstructor = () => {
