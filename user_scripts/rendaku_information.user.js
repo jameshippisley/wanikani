@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.2019
+// @version     0.2020
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,8 @@
 function WK_Rendaku()
 {
     this.settings = {
-        hideTrivial: false
+        hideTrivial: false,
+        hideUnexceptional: false
     };
     this.currentlyLoadingSettings = false; // if wkof is available and currently loading the settings, this will be a Promise resolving after the settings are loaded
     this.itemInfoHandle = null;
@@ -43,10 +44,12 @@ function WK_Rendaku()
         if (!info) return null;
 
         let trivial = info.includes(`no possible rendaku`);
-        let waitForSettings = trivial && this.currentlyLoadingSettings;
+        const unexceptional = !info.includes(`unexpectedly`) && info.includes(`none of the exceptional circumstances`);
+        let waitForSettings = trivial && unexceptional && this.currentlyLoadingSettings;
 
         let paragraphConstructor = () => {
             if (trivial && this.settings.hideTrivial) return null;
+            if (unexceptional && this.settings.hideUnexceptional) return null;
             let p = document.createElement(`p`);
             p.innerHTML = info;
             return p;
@@ -72,8 +75,16 @@ function WK_Rendaku()
             title: `Rendaku Information Settings`,
             on_save: this.saveSettings.bind(this),
             content: {
-                hideTrivial: {type: `checkbox`, label: `Hide trivial info`, hover_tip: `If the rendaku information is trivial, don't show the section at all.`}
-            }
+                hideTrivial: {
+                    type: `checkbox`,
+                    label: `Hide trivial info`,
+                    hover_tip: `If the rendaku information is trivial, don't show the section at all.`
+                },
+                hideUnexceptional: {
+                    type: `checkbox`,
+                    label: `Hide info on unexceptional circumstances`,
+                    hover_tip: `If the onyomi doesn't rendaku or if the kunyomi does rendaku as generally expected, don't show the section at all.`}
+                }
         });
         dialog.open();
     }
