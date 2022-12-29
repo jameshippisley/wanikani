@@ -251,7 +251,7 @@ class Vocab():
             return (False, f"the prior character ({before.kana}) is a particle")
 
         if this.character in "様込手付死方返先差鹿崎":
-            return (False, f"rendaku almost never occurs on {it} (even though it is konyomi)")
+            return (False, f"rendaku almost never occurs on {it} (even though it is kunyomi)")
 
         if this.character == '日' and [x for x in self.meanings if x.endswith('days')]:
             return (False, f"~{this.character} (days counter) does not rendaku")
