@@ -14,7 +14,7 @@ class Vocab():
         self.string = string  # String of characters (kanji + kana) making up vocab
         self.meanings = meanings  # List of english meanings
         self.readings = readings  # List of allowed kana readings
-        self.level = level  # Wanikani level
+        self.level = level  # WaniKani level
 
         self.interpreted_readings = self.get_interpreted_readings(kanji_dict)
 
@@ -163,10 +163,10 @@ class Vocab():
 
         if '白' in kanji or '黒' in kanji:
             if kanji in ['白菊', '黒板']:
-                return (True, f"there are only two words in wanikani containing either black (黒) or white (白) "
+                return (True, f"there are only two words in WaniKani containing either black (黒) or white (白) "
                               f"which rendaku (黒板 - \"blackboard\" and 白菊 - \"white chrystanthemum\") and this is one of them")
             else:
-                return (False, f"there only two words in wanikani containing either black (黒) or white (白) "
+                return (False, f"there only two words in WaniKani containing either black (黒) or white (白) "
                               f"which rendaku (黒板 - \"blackboard\" and 白菊 - \"white chrystanthemum\") and this is not one of them")
 
         if this.type == 'onyomi':
@@ -179,10 +179,10 @@ class Vocab():
                     return (False, f"\"First Edition\" is an exception to an exception. "
                                    f"You might think it would rendaku because {it} is one of two visually "
                                    f"similar はん kanji (版 - edition and 板 - board) "
-                                   f"which rendaku for all other words in wanikani despite being onyomi")
+                                   f"which rendaku for all other words in WaniKani despite being onyomi")
                 else:
                     return (True, f"{it} is one of two visually similar はん kanji (版 - edition and 板 - board) "
-                                  f"which almost always rendaku in wanikani despite being onyomi. "
+                                  f"which almost always rendaku in WaniKani despite being onyomi. "
                                   f"(The only exception to this exception is 初版(しょはん) - \"First Edition\")")
 
 
@@ -206,7 +206,7 @@ class Vocab():
                     return (True,
                             f"although {it} is onyomi, {before.character}{this.character} is one of the three countries in WaniKani (China, Heaven and the Neighboring Country) that you really want to go (ご!) to")
                 else:
-                    return (False, f"{it} is onyomi and {before.character}{this.character} is not one of the three countries in WaniKani (China, Heaven and the Neighboring Country) that rendaku inspite of being onyomi")
+                    return (False, f"{it} is onyomi and {before.character}{this.character} is not one of the three countries in WaniKani (China, Heaven and the Neighboring Country) that rendaku in spite of being onyomi")
 
 
             if kanji in [
@@ -251,7 +251,7 @@ class Vocab():
             return (False, f"the prior character ({before.kana}) is a particle")
 
         if this.character in "様込手付死方返先差鹿崎":
-            return (False, f"rendaku almost never occures on {it} (even though it is konyomi)")
+            return (False, f"rendaku almost never occurs on {it} (even though it is kunyomi)")
 
         if this.character == '日' and [x for x in self.meanings if x.endswith('days')]:
             return (False, f"~{this.character} (days counter) does not rendaku")
@@ -281,8 +281,3 @@ class Vocab():
             string += "\n"
 
         return string
-
-
-
-
-
