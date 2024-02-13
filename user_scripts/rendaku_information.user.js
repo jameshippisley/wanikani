@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        WaniKani Rendaku Information
-// @version     0.2026
+// @version     0.2027
 // @author      jameshippisley
 // @description Adds information to Wanikani about why readings do or do not use rendaku.
 // @license     GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
@@ -12,7 +12,7 @@
 // @updateURL   https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 // @downloadURL https://raw.githubusercontent.com/jameshippisley/wanikani/master/user_scripts/rendaku_information.user.js
 //
-// @require     https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=1276693
+// @require     https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=1326536
 // @require     https://raw.githubusercontent.com/jameshippisley/wanikani/51ec0bb201f179ac632dc9c0f4aa64b778428f39/user_scripts/rendaku_information_data.json
 //
 // @run-at      document-end
